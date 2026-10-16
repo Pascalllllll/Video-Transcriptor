@@ -3,3 +3,6 @@ dist
 release
 *.log
 bench
+
+# Private run notes, kept on this machine
+LOCAL.md

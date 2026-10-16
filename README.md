@@ -2,6 +2,8 @@
 
 Turn a YouTube link, a Google Drive link or a video file into a full transcript, on your own computer.
 
+![Scribe's start page: the headline "Every word, written down.", a box for a video link, a button to choose a file, and the model and language picker](docs/screenshot.webp)
+
 - **Links or files.** YouTube, Google Drive, Vimeo, TikTok, Instagram, X and most other video sites (through [yt-dlp](https://github.com/yt-dlp/yt-dlp)), or drop in MP4, MOV, WebM, MP3, M4A, WAV and more.
 - **Whisper on your graphics card.** OpenAI's Whisper speech model runs locally through WebGPU ([transformers.js](https://github.com/huggingface/transformers.js)). Nothing is uploaded and there is no account, quota or server.
 - **99 languages, detected for you.** transformers.js has no language detection yet and silently assumes English. Scribe asks Whisper itself: one decoder step on the loudest 30 seconds, then it reads the language token's probability.
