@@ -120,7 +120,19 @@ export function Doc({ t, job, live, onBack, onChange, onCancel, onResume, say }:
   }, []);
 
   const seek = useCallback((s: number) => player.current?.seek(s), []);
-  const onTime = useCallback((s: number) => setNow(s), []);
+  // The player reports time every frame. Only re-render when what the time shows changes: the
+  // highlighted line or the current chapter. Re-rendering the whole page 60 times a second made
+  // long transcripts stutter while playing.
+  const timeKey = useRef("");
+  const keyInputs = useRef({ segments: t.segments, chapters: insight.chapters });
+  keyInputs.current = { segments: t.segments, chapters: insight.chapters };
+  const onTime = useCallback((s: number) => {
+    const { segments, chapters } = keyInputs.current;
+    const key = `${s > 0}|${segmentAt(segments, s)?.id}|${chapters.findIndex((c) => s >= c.start && s < c.end + 0.5)}`;
+    if (key === timeKey.current) return;
+    timeKey.current = key;
+    setNow(s);
+  }, []);
   const edit = useCallback(
     (id: number, value: string) => {
       if (view) {
